@@ -10,7 +10,7 @@ A user will also see the bands info. A user will also see the weather for the da
 
 
 API - Ticketmaster
-API - weather
 API - IMDB for music
+API - Google Map
 
 
