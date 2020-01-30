@@ -47,17 +47,17 @@ $(document).ready(function() {
                 var venueCityCountry = $("<div>").text(venue.city.name + ", " + venue.country.name);
                 
                 // create the division "result" and append all to it
-                var result = $("<div>");
-                result.append(musicianName, eventURL, eventDateTime, venueName, venueCityCountry);
+                var eventInfo = $("<div>");
+                eventInfo.append(musicianName, eventURL, eventDateTime, venueName, venueCityCountry);
 
                 // venue's url
                 if("outlets" in result) { // if outlet property (contains venue's URL) exists
                     venueURL = $("<a>").attr("href", result.outlets[0].url).text(venue.name + "'s information");
-                    result.append(venueURL);
+                    eventInfo.append(venueURL);
                 }
                 
                 // append result to body
-                $("body").append(result);
+                $("body").append(eventInfo);
             } else {    // if invalid value(s) entered: responded data doesn't include any event data.
                 $("#errorMsg").text("invalid input");
             }        
