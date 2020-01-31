@@ -1,23 +1,28 @@
 var apiKey = "rPPNfm65VyGvXeDMXOhSXr3XsxhUllbU";
 var queryURL;
 var musician;
+var state;
 var city;
 
 $(document).ready(function() {
     // search button event handler
     $("#searchBtn").on("click", function(event) {
+        // clear the display
+        clearDisplay();
         // get the musican's name entered in the input element and assign the value to the variable "musician"
         musician = $("#musicianInput").val().trim();
+        // get the state code of the selected state and assign the value to the variable "state"
+        state = $("select").val();
         // get the city anme entered in the input element and assign the value to the variable "city"
-        city = "&city=" + $("#cityInput").val().trim();
+        city = $("#cityInput").val().trim();
         // call the function "accessAPI"
-        accessAPI();        
+        accessAPI();      
     });
 
     // function to call API and get the music event data
     function accessAPI() {
         // assign the API call url to the variable "queryURL"
-        queryURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&keyword=" + musician + city + "&apikey=" + apiKey;
+        queryURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=us&apikey=" + apiKey + "&keyword=" + musician + "&stateCode=" + state + "&city=" + city;
         console.log(queryURL);
 
         $.ajax({
@@ -64,5 +69,9 @@ $(document).ready(function() {
                 $("#errorMsg").text("invalid input");
             }        
         });      
+    }
+
+    function clearDisplay() {
+        $(".container").empty();
     }
 });
