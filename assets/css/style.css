@@ -1,3 +1,19 @@
 #errorMsg {
     color: red;
 }
+
+.container {
+    width: 750px;
+    text-align: center;
+}
+
+h1 {
+    padding: 25px;
+    width: 100%;
+    height: 100px;
+    background-color: green;
+}
+
+.field {
+    text-align: center;
+}
