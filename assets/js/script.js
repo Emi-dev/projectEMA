@@ -28,9 +28,11 @@ $(document).ready(function() {
             // check if input(s) is(are) valid and event data included in the response.
             if(Object.keys(response)[0] === "_embedded") {
                 var result = response._embedded.events[0];
+                var eventList = JSON.stringify(response._embedded.events);
+                console.log("eventList: ", eventList);
 
                 // musician's name
-                var musicianName = $("<h2>").text(result.name);
+                var musicianName = $("<h2>").addClass("musicianName").text(result.name);
 
                 // event URL
                 var eventURL = $("<a>").attr("href", result.url).text("Click here for " + result.name + "'s Event Ticket Information");
@@ -47,7 +49,7 @@ $(document).ready(function() {
                 var venueCityCountry = $("<div>").text(venue.city.name + ", " + venue.country.name);
                 
                 // create the division "result" and append all to it
-                var eventInfo = $("<div>");
+                var eventInfo = $("<div>").addClass("container");
                 eventInfo.append(musicianName, eventURL, eventDateTime, venueName, venueCityCountry);
 
                 // venue's url
