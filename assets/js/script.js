@@ -17,9 +17,9 @@ $(document).ready(function() {
         state = $("select").val();
         // get the city anme entered in the input element and assign the value to the variable "city"
         city = $("#cityInput").val();
-        // get the start date
+        // get the start date (format: 2020-02-01T17:00:00Z)
         startDate = "2020-02-01T17:00:00Z";
-        // get the end date
+        // get the end date (format: 2020-02-29T22:00:00Z)
         endDate = "2020-02-29T22:00:00Z";
         // call the function "accessAPI"
         accessAPI();      
