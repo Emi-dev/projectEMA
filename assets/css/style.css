@@ -14,6 +14,16 @@ h1 {
     background-color: green;
 }
 
+.form {
+    margin: 2em;
+    padding: 1.5em;
+}
+
 .field {
     text-align: center;
+}
+
+input {
+    margin: 1em;
+    padding: 1em;
 }
