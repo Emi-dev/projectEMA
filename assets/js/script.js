@@ -3,6 +3,8 @@ var queryURL;
 var musician;
 var state;
 var city;
+var startDate;
+var endDate;
 
 $(document).ready(function() {
     // search button event handler
@@ -15,6 +17,10 @@ $(document).ready(function() {
         state = $("select").val();
         // get the city anme entered in the input element and assign the value to the variable "city"
         city = $("#cityInput").val();
+        // get the start date
+        startDate = "2020-02-01T17:00:00Z";
+        // get the end date
+        endDate = "2020-02-29T22:00:00Z";
         // call the function "accessAPI"
         accessAPI();      
     });
@@ -22,7 +28,7 @@ $(document).ready(function() {
     // function to call API and get the music event data
     function accessAPI() {
         // assign the API call url to the variable "queryURL"
-        queryURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=us&apikey=" + apiKey + "&keyword=" + musician + "&stateCode=" + state + "&city=" + city;
+        queryURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=us&apikey=" + apiKey + "&keyword=" + musician + "&stateCode=" + state + "&city=" + city + "&startDateTime=" + startDate + "&endDateTime= " + endDate;
         console.log(queryURL);
 
         $.ajax({
@@ -73,5 +79,6 @@ $(document).ready(function() {
 
     function clearDisplay() {
         $(".searchResult").remove();
+        $("#errorMsg").text("");
     }
 });
