@@ -1,3 +1,18 @@
 #errorMsg {
     color: red;
 }
+
+h1 {
+    color: #ffffff;
+    text-align: center;
+}
+
+.form {
+    margin: 2em;
+    padding: 1.5em;
+}
+
+input {
+    margin: 1em;
+    padding: 1em;
+}

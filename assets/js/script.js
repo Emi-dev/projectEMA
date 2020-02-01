@@ -10,11 +10,11 @@ $(document).ready(function() {
         // clear the display
         clearDisplay();
         // get the musican's name entered in the input element and assign the value to the variable "musician"
-        musician = $("#musicianInput").val().trim();
+        musician = $("#musicianInput").val();
         // get the state code of the selected state and assign the value to the variable "state"
         state = $("select").val();
         // get the city anme entered in the input element and assign the value to the variable "city"
-        city = $("#cityInput").val().trim();
+        city = $("#cityInput").val();
         // call the function "accessAPI"
         accessAPI();      
     });
@@ -42,7 +42,7 @@ $(document).ready(function() {
                     var eventURL = $("<a>").attr("href", event.url).text("Click here for " + event.name + "'s Event Ticket Information");
 
                     // event date
-                    var eventDateTime = $("<h3>").text(event.dates.start.localDate + ", " +  event.dates.start.localTime);
+                    var eventDateTime = $("<h3>").addClass("ui header").text(event.dates.start.localDate + ", " +  event.dates.start.localTime);
 
                     var venue = event._embedded.venues[0];
                     
@@ -53,7 +53,7 @@ $(document).ready(function() {
                     var venueCityCountry = $("<div>").text(venue.city.name + ", " + venue.country.name);
                     
                     // create the division "event" and append all to it
-                    var eventInfo = $("<div>").addClass("container");
+                    var eventInfo = $("<div>").addClass("searchResult ui info ignored message");
                     eventInfo.append(musicianName, eventURL, eventDateTime, venueName, venueCityCountry);
 
                     // venue's url
@@ -72,6 +72,6 @@ $(document).ready(function() {
     }
 
     function clearDisplay() {
-        $(".container").empty();
+        $(".searchResult").remove();
     }
 });
