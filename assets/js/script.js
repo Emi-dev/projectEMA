@@ -1,10 +1,13 @@
-var apiKey = "rPPNfm65VyGvXeDMXOhSXr3XsxhUllbU";
-var queryURL;
+// global variable diclarations for Ticketmaster API
+var TicketmasterApiKey = "rPPNfm65VyGvXeDMXOhSXr3XsxhUllbU";
+var ticketmasterURL;
 var musician;
 var state;
 var city;
 var startDate;
 var endDate;
+// global variable diclarations for Google Map API
+var googleMapApiKey = "AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM";
 
 $(document).ready(function() {
     // search button event handler
@@ -13,26 +16,38 @@ $(document).ready(function() {
         clearDisplay();
         // get the musican's name entered in the input element and assign the value to the variable "musician"
         musician = $("#musicianInput").val();
-        // get the state code of the selected state and assign the value to the variable "state"
-        state = $("select").val();
+
         // get the city anme entered in the input element and assign the value to the variable "city"
         city = $("#cityInput").val();
+        
+        // get the state code of the selected state and assign the value to the variable "state"
+        state = $("select").val();
+
         // get the start date (format: 2020-02-01T17:00:00Z)
-        startDate = "2020-02-01T17:00:00Z";
+        //startDate = "2020-02-01T17:00:00Z";
         // get the end date (format: 2020-02-29T22:00:00Z)
-        endDate = "2020-02-29T22:00:00Z";
-        // call the function "accessAPI"
-        accessAPI();      
+        //endDate = "2020-02-29T22:00:00Z";
+        // call the function "accessTicketmasterAPI"
+        accessTicketmasterAPI();      
     });
 
-    // function to call API and get the music event data
-    function accessAPI() {
-        // assign the API call url to the variable "queryURL"
-        queryURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=us&apikey=" + apiKey + "&keyword=" + musician + "&stateCode=" + state + "&city=" + city + "&startDateTime=" + startDate + "&endDateTime= " + endDate;
-        console.log(queryURL);
+    // map button event handler
+    $(document).on("click", ".mapBtn", function(event) {
+        event.preventDefault();
+        console.log("map button clicked!");
+        $("#mapModal").modal("show");
+        $("#mapContent").text(city + ", " + state);
+    });
+
+    // function to call Ticketmaster API and get the music event data
+    function accessTicketmasterAPI() {
+        // assign the API call url to the variable "ticketmasterURL"
+        ticketmasterURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=us&apikey=" + TicketmasterApiKey + "&keyword=" + musician + "&stateCode=" + state + "&city=" + city;
+        // ticketmasterURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=us&apikey=" + TicketmasterApiKey + "&keyword=" + musician + "&stateCode=" + state + "&city=" + city + "&startDateTime=" + startDate + "&endDateTime= " + endDate;
+        console.log(ticketmasterURL);
 
         $.ajax({
-            url: queryURL,
+            url: ticketmasterURL,
             method: "GET"
         }).then(function(response) {
             // check if input(s) is(are) valid and event data included in the response.
@@ -45,7 +60,7 @@ $(document).ready(function() {
                     var musicianName = $("<h2>").addClass("musicianName").text(event.name);
 
                     // event URL
-                    var eventURL = $("<a>").attr("href", event.url).text("Click here for " + event.name + "'s Event Ticket Information");
+                    var eventURL = $("<a>").attr({href: event.url, target: "_blank"}).text("Click here for the ticket information");
 
                     // event date
                     var eventDateTime = $("<h3>").addClass("ui header").text(event.dates.start.localDate + ", " +  event.dates.start.localTime);
@@ -57,14 +72,17 @@ $(document).ready(function() {
 
                     // venue's city
                     var venueCityCountry = $("<div>").text(venue.city.name + ", " + venue.country.name);
+
+                    // map button
+                    var mapButton = $("<button>").addClass("ui primary button mapBtn").attr("type", "submit").text("Map");
                     
                     // create the division "event" and append all to it
                     var eventInfo = $("<div>").addClass("searchResult ui info ignored message");
-                    eventInfo.append(musicianName, eventURL, eventDateTime, venueName, venueCityCountry);
+                    eventInfo.append(musicianName, eventURL, eventDateTime, venueName, venueCityCountry, mapButton);
 
                     // venue's url
                     if("outlets" in event) { // if outlet property (contains venue's URL) exists
-                        venueURL = $("<a>").attr("href", event.outlets[0].url).text("Venue information");
+                        venueURL = $("<a>").attr({href: event.outlets[0].url, target: "_blank"}).text("Venue information");
                         eventInfo.append(venueURL);
                     }
                     
