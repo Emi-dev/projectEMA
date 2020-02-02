@@ -2,16 +2,19 @@
     color: red;
 }
 
-.container {
-    width: 750px;
+#headerDiv {
     text-align: center;
+    background-color: green;
 }
 
 h1 {
-    padding: 25px;
-    width: 100%;
-    height: 100px;
-    background-color: green;
+    margin: 0 auto;
+    padding: 0.5em;
+    color: white;
+}
+
+.ui.container.container {
+    margin-top: 2em;
 }
 
 .form {
@@ -19,11 +22,43 @@ h1 {
     padding: 1.5em;
 }
 
-.field {
-    text-align: center;
-}
-
 input {
     margin: 1em;
     padding: 1em;
+}
+
+/* adjust the width of the container according to the screen size */
+/* extra small screen */
+@media screen and (max-width: 575px) {
+    .container {
+        width: 90%;
+    }
+}
+
+/*  small screen */
+@media screen and (min-width: 576px) {
+    .container {
+        width: 80%;
+    }
+}
+
+/* medium screen */
+@media screen and (min-width: 768px) {
+    .container {
+        width: 70%;
+    }
+}
+
+/* large screen */
+@media screen and (min-width: 992px) {
+    .container {
+        width: 75%;
+    }
+}
+
+/* extra large screen */
+@media screen and (min-width: 1200px) {
+    .container {
+        width: 60%;
+    }
 }
