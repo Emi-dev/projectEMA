@@ -74,8 +74,11 @@ $(document).ready(function() {
                     var eventURL = $("<a>").attr({href: event.url, target: "_blank"}).text("Click here for the ticket information");
 
                     // event date
-                    var eventDateTime = $("<h3>").addClass("ui header").text(event.dates.start.localDate + ", " +  event.dates.start.localTime);
-
+                    var momentObj = moment(event.dates.start.localDate);
+                    var time = event.dates.start.localTime.split(":");
+                    momentObj.set({hours: time[0], minutes: time[1]});
+                    var eventDateTime = $("<h3>").addClass("ui header").text(momentObj.format("LLLL"));
+                   
                     var venue = event._embedded.venues[0];
                     
                     // venue's name
