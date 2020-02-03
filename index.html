@@ -10,9 +10,9 @@
         <title>Area Event Finder</title>
     </head>
     <body>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-          <script src="assets/js/script.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <script src="assets/js/script.js"></script>
         
         <div id="headerDiv" class="ui fixed inverted menu">
             <h1>Music Event Search</h1>
@@ -108,18 +108,33 @@
             </div>
         </div>
 
+        <!-- <div id="map"></div> -->
+
+        <!-- Modal to display map -->
         <div id="mapModal" class="ui modal">
             <i class="close icon"></i>
             <div class="header">
                 Map
             </div>
             <div id="mapContent" class="content">
-                
+                <div id="map"></div>
             </div>
         </div>
-               
-        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM&callback=initMap">
+
+        <!-- <script>
+            var map;
+            function initMap() {
+                map = new google.maps.Map($("#map"), {
+                    center: {lat: -34.397, lng: 150.644},
+                    zoom: 8
+                });
+            }
         </script> -->
+   
+        <!-- Google Map API -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM&callback=initMap" async defer></script> 
+         <!-- Googl Places API  -->
+        <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM&libraries=places"></script> -->
     </div>
 </body>
 
