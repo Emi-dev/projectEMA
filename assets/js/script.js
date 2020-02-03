@@ -8,7 +8,17 @@ var startDate;
 var endDate;
 // global variable diclarations for Google Map API
 var googleMapApiKey = "AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM";
+var venueMapInfo = [];
 
+var latitude;
+var longitude;
+
+// get the current poision
+navigator.geolocation.getCurrentPosition(setInitialLocation);
+function setInitialLocation(position) {
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+}
 
 $(document).ready(function() {
     // search button event handler
@@ -37,26 +47,17 @@ $(document).ready(function() {
         event.preventDefault();
         $("#mapModal").modal("show");
 
-        // function initMap() {
-        //     // The location of Uluru
-        //     var uluru = {lat: -25.344, lng: 131.036};
-        //     // The map, centered at Uluru
-        //     var map = new google.maps.Map(
-        //         $("#map"), {zoom: 4, center: uluru});
-        //     // The marker, positioned at Uluru
-        //     var marker = new google.maps.Marker({position: uluru, map: map});
-        // }
-    });
+        // get which event's map button is clicked
+        var dataEvent = parseInt($(this).attr("data-event"));
+        $("#mapHeader").text(venueMapInfo[dataEvent].name);
+        // latitude = venueMapInfo[dataEvent].lat;
+        // console.log("event venut latitude: ", latitude);
+        // longitude = venueMapInfo[dataEvent].lon;
+        // console.log("event venue longitude: ", longitude);
 
-    // function initMap() {
-    //     // The location of Uluru
-    //     var uluru = {lat: -25.344, lng: 131.036};
-    //     // The map, centered at Uluru
-    //     var map = new google.maps.Map(
-    //         document.getElementById('mapContent'), {zoom: 4, center: uluru});
-    //     // The marker, positioned at Uluru
-    //     var marker = new google.maps.Marker({position: uluru, map: map});
-    // }       
+        // create the map
+        initMap();
+    });
 
     // function to call Ticketmaster API and get the music event data
     function accessTicketmasterAPI() {
@@ -71,21 +72,46 @@ $(document).ready(function() {
         }).then(function(response) {
             // check if input(s) is(are) valid and event data included in the response.
             if(Object.keys(response)[0] === "_embedded") {
-                //var event = response._embedded.events[0];
                 var eventList = response._embedded.events;
                 
-                eventList.forEach(function(event) {
+                for(var i = 0; i < eventList.length; i++) {
+                    var event = eventList[i];
                     // musician's name
                     var musicianName = $("<h2>").addClass("musicianName").text(event.name);
 
                     // event URL
                     var eventURL = $("<a>").attr({href: event.url, target: "_blank"}).text("Click here for the ticket information");
 
-                    // event date
-                    var momentObj = moment(event.dates.start.localDate);
-                    var time = event.dates.start.localTime.split(":");
-                    momentObj.set({hours: time[0], minutes: time[1]});
-                    var eventDateTime = $("<h3>").addClass("ui header").text(momentObj.format("LLLL"));
+                    // event date and time formatting using Moment.js
+                    var momentObj;
+                    var isDateTBA = event.dates.start.dateTBA;
+                    var isTimeTBA = event.dates.start.timeTBA;
+                    var momentDateTime;
+
+                    if(!isDateTBA) {
+                        momentObj = moment(event.dates.start.localDate);
+                    }
+
+                    if(!isTimeTBA) {
+                        var time = event.dates.start.localTime.split(":");
+                        momentObj.set({hours: time[0], minutes: time[1]});
+                    }
+                    
+                    if(!isDateTBA ) {
+                        if(!isTimeTBA) {
+                            momentDateTime = momentObj.format("dddd, MMMM DD, YYYY, hh:mm a");
+                        } else {
+                            momentDateTime = momentObj.format("dddd, MMMM DD, YYYY,") + " Time:TBA";
+                        }
+                    } else {
+                        if(!isTimeTBA) {
+                            momentDateTime = "Date:TBA, " + momentObj.format("hh:mm a");
+                        } else {
+                            momentDateTime = "Date:TBA, Time:TBA";
+                        }
+                    }
+
+                    var eventDateTime = $("<h3>").addClass("ui header").text(momentDateTime);
                    
                     var venue = event._embedded.venues[0];
                     
@@ -96,7 +122,7 @@ $(document).ready(function() {
                     var venueCityCountry = $("<div>").text(venue.city.name + ", " + venue.country.name);
 
                     // map button
-                    var mapButton = $("<button>").addClass("ui primary button mapBtn").attr("type", "submit").text("Map");
+                    var mapButton = $("<button>").addClass("ui primary button mapBtn").attr({type: "submit", "data-event": i}).text("Map");
                     
                     // create the division "event" and append all to it
                     var eventInfo = $("<div>").addClass("searchResult ui info ignored message");
@@ -110,9 +136,15 @@ $(document).ready(function() {
                     
                     // append event to body
                     $("body").append(eventInfo);
-                });
+
+                    // store the venue's location in the object array, "venueMapInfo"
+                    var venueLatitude = venue.location.latitude;
+                    var venueLongitude = venue.location.longitude;
+                    var venueLocation = {lat: venueLatitude, lon: venueLongitude, name: venueName.text()};
+                    venueMapInfo.push(venueLocation);
+                };
             } else {    // if invalid value(s) entered: responded data doesn't include any event data.
-                $("#errorMsg").text("invalid input");
+                $("#errorMsg").text("No result found");
             }        
         });      
     }
@@ -120,15 +152,16 @@ $(document).ready(function() {
     function clearDisplay() {
         $(".searchResult").remove();
         $("#errorMsg").text("");
+        venueMapInfo = [];
     }
 });
 
 function initMap() {
     // The location of Uluru
-    var uluru = {lat: -25.344, lng: 131.036};
+    var uluru = {lat: latitude, lng: longitude};
     // The map, centered at Uluru
     var map = new google.maps.Map(
-        document.getElementById('mapContent'), {zoom: 4, center: uluru});
+        document.getElementById('mapContent'), {zoom: 15, center: uluru});
     // The marker, positioned at Uluru
     var marker = new google.maps.Marker({position: uluru, map: map});
 }    
