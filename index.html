@@ -7,16 +7,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
         <link rel="stylesheet" href="assets/css/style.css">
-        <title>Area Event Finder</title>
+        <style>
+            /* Set the size of the div element that contains the map */
+            #mapContent {
+                height: 400px;  /* The height is 400 pixels */
+                width: 100%;  /* The width is the width of the web page */
+            }
+         </style>
+
+        <title>Music Event Finder</title>
     </head>
     <body>
+        <!-- jQuery -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!-- Semantic UI -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
         <!-- Moment.ms -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-        <!-- Google Map API -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM&callback=initMap" type="text/javascript"></script> 
+        <!-- my script file -->
         <script src="assets/js/script.js"></script>
         
         <div id="headerDiv" class="ui fixed inverted menu">
@@ -113,18 +121,32 @@
             </div>
         </div>
 
-        <!-- Modal to display map -->
+        <!-- Modal to display a map -->
         <div id="mapModal" class="ui modal">
             <i class="close icon"></i>
             <div class="header">
                 Map
             </div>
             <div id="mapContent" class="content">
-                <div id="map"></div>
+                <!-- Google map is displayed here -->
             </div>
         </div>
 
-        
+        <script type="text/javascript">
+            function initMap() {
+                // The location of Uluru
+                var uluru = {lat: -25.344, lng: 131.036};
+                // The map, centered at Uluru
+                var map = new google.maps.Map(
+                    document.getElementById('mapContent'), {zoom: 4, center: uluru});
+                // The marker, positioned at Uluru
+                var marker = new google.maps.Marker({position: uluru, map: map});
+            }       
+        </script>
+
+        <!-- Google Map API -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM&callback=initMap" type="text/javascript"></script>
+               
         <!-- Googl Places API  -->
         <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM&libraries=places"></script> -->
     </div>
