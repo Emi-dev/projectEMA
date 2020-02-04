@@ -106,8 +106,9 @@ $(document).ready(function() {
 
                     // event date and time formatting using Moment.js
                     var momentObj;
-                    var isDateTBA = event.dates.start.dateTBA;
-                    var isTimeTBA = event.dates.start.timeTBA;
+                    var isDateTBA = event.dates.start.localDate === undefined;
+                    var isTimeTBA = event.dates.start.localTime === undefined;
+                  
                     var momentDateTime;
 
                     if(!isDateTBA) {
