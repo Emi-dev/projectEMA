@@ -41,6 +41,12 @@ a {
     font-weight: bold;
 }
 
+.venueName {
+    color: #6f0c3f;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
 /* adjust the width of the container according to the screen size */
 /* extra small screen */
 @media screen and (max-width: 575px) {
