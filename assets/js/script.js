@@ -67,6 +67,7 @@ $(document).ready(function() {
     // map button event handler
     $(document).on("click", ".mapBtn", function(event) {
         event.preventDefault();
+        event.stopPropagation();    // prevent event bubbling
         // show the modal
         $("#mapModal").modal("show");
         // get which event's map button is clicked
