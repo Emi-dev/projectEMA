@@ -13,12 +13,30 @@ var latitude = 0;
 var longitude = 0;
 
 var map;
+var infowindow;
 function initMap() {
     var latlng = new google.maps.LatLng(latitude, longitude);
+    infowindow = new google.maps.InfoWindow();
     // The map, centered at latlng
     map = new google.maps.Map(document.getElementById('mapContent'), {zoom: 17, center: latlng});
     // The marker, positioned at latlng
     var marker = new google.maps.Marker({position: latlng, map: map});
+
+    // var request = {
+    //     query: document.getElementById("mapHeader").textContent,
+    //     fields: ['name', 'geometry'],
+    //   };
+    
+    //   var service = new google.maps.places.PlacesService(map);
+    
+    //   service.findPlaceFromQuery(request, function(results, status) {
+    //     if (status === google.maps.places.PlacesServiceStatus.OK) {
+    //       for (var i = 0; i < results.length; i++) {
+    //         createMarker(results[i]);
+    //       }
+    //       map.setCenter(results[0].geometry.location);
+    //     }
+    //   });
 }    
 
 $(document).ready(function() {
@@ -49,6 +67,7 @@ $(document).ready(function() {
     // map button event handler
     $(document).on("click", ".mapBtn", function(event) {
         event.preventDefault();
+        event.stopPropagation();    // prevent event bubbling
         // show the modal
         $("#mapModal").modal("show");
         // get which event's map button is clicked
@@ -60,6 +79,10 @@ $(document).ready(function() {
         longitude = parseFloat(venueMapInfo[dataEvent].lon);
         // create the map
         initMap();
+    });
+
+    $(document).on("click", ".searchResult", function(event) {
+        window.open($(this)[0].children[1].href, '_blank');
     });
 
     // function to call Ticketmaster API and get the music event data
@@ -82,13 +105,11 @@ $(document).ready(function() {
                     // musician's name
                     var musicianName = $("<h2>").addClass("musicianName").text(event.name);
 
-                    // event URL
-                    var eventURL = $("<a>").attr({href: event.url, target: "_blank"}).text("Click here for the ticket information");
-
                     // event date and time formatting using Moment.js
                     var momentObj;
-                    var isDateTBA = event.dates.start.dateTBA;
-                    var isTimeTBA = event.dates.start.timeTBA;
+                    var isDateTBA = event.dates.start.localDate === undefined;
+                    var isTimeTBA = event.dates.start.localTime === undefined;
+                  
                     var momentDateTime;
 
                     if(!isDateTBA) {
@@ -119,14 +140,16 @@ $(document).ready(function() {
                     var venue = event._embedded.venues[0];
                     
                     // venue's name
-                    var venueName = $("<div>").text(venue.name);
+                    var venueName = $("<div>").addClass("venueName").text(venue.name);
 
                     // venue's city
-                    var venueCityCountry = $("<div>").text(venue.city.name + ", " + venue.country.name);
+                    var venueCityCountry = $("<div>").text(venue.city.name + ", " + venue.state.stateCode + " , " + venue.country.name);
 
                     // map button
                     var mapButton = $("<button>").addClass("ui primary button mapBtn").attr({type: "submit", "data-event": i}).text("Map");
                     
+                    // event URL
+                    var eventURL = $("<a>").attr({href: event.url, target: "_blank"});
                     // create the division "event" and append all to it
                     var eventInfo = $("<div>").addClass("searchResult ui container info ignored message");
                     eventInfo.append(musicianName, eventURL, eventDateTime, venueName, venueCityCountry, mapButton);
@@ -136,7 +159,7 @@ $(document).ready(function() {
                         venueURL = $("<a>").attr({href: event.outlets[0].url, target: "_blank"}).text("Venue information");
                         eventInfo.append(venueURL);
                     }
-                    
+
                     // append event to body
                     $("body").append(eventInfo);
 
