@@ -9,19 +9,22 @@ var endDate;
 // global variable diclarations for Google Map API
 var googleMapApiKey = "AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM";
 var venueMapInfo = [];
-var latitude;
-var longitude;
+var latitude = 0;
+var longitude = 0;
 
 var map;
 function initMap() {
     var latlng = new google.maps.LatLng(latitude, longitude);
     // The map, centered at latlng
-    map = new google.maps.Map(document.getElementById('mapContent'), {zoom: 15, center: latlng});
+    map = new google.maps.Map(document.getElementById('mapContent'), {zoom: 17, center: latlng});
     // The marker, positioned at latlng
     var marker = new google.maps.Marker({position: latlng, map: map});
 }    
 
 $(document).ready(function() {
+    // date/time picker
+    // $("#dateTime").calendar();
+
     // search button event handler
     $("#searchBtn").on("click", function(event) {
         // clear the display
@@ -53,8 +56,8 @@ $(document).ready(function() {
         // display the venue name in the map modal header
         $("#mapHeader").text(venueMapInfo[dataEvent].name);
         // assign the latitude and longitude of the venue to the variables for the map
-        latitude = venueMapInfo[dataEvent].lat;
-        longitude = venueMapInfo[dataEvent].lon;
+        latitude = parseFloat(venueMapInfo[dataEvent].lat);
+        longitude = parseFloat(venueMapInfo[dataEvent].lon);
         // create the map
         initMap();
     });
@@ -125,7 +128,7 @@ $(document).ready(function() {
                     var mapButton = $("<button>").addClass("ui primary button mapBtn").attr({type: "submit", "data-event": i}).text("Map");
                     
                     // create the division "event" and append all to it
-                    var eventInfo = $("<div>").addClass("searchResult ui info ignored message");
+                    var eventInfo = $("<div>").addClass("searchResult ui container info ignored message");
                     eventInfo.append(musicianName, eventURL, eventDateTime, venueName, venueCityCountry, mapButton);
 
                     // venue's url

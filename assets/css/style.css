@@ -1,10 +1,19 @@
+body {
+    background-color: #d3dbe4;
+}
+
+label {
+    font-size: 1em;
+}
+
 #errorMsg {
     color: red;
 }
 
 #headerDiv {
     text-align: center;
-    background-color: green;
+    color: whitesmoke;
+    background-color: teal;
 }
 
 h1 {
@@ -27,38 +36,43 @@ input {
     padding: 1em;
 }
 
+a {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
 /* adjust the width of the container according to the screen size */
 /* extra small screen */
 @media screen and (max-width: 575px) {
-    .container {
+    .container, .searchResult {
         width: 90%;
     }
 }
 
 /*  small screen */
 @media screen and (min-width: 576px) {
-    .container {
+    .container, .searchResult {
         width: 80%;
     }
 }
 
 /* medium screen */
 @media screen and (min-width: 768px) {
-    .container {
+    .container, .searchResult {
         width: 70%;
     }
 }
 
 /* large screen */
 @media screen and (min-width: 992px) {
-    .container {
+    .container, .searchResult {
         width: 75%;
     }
 }
 
 /* extra large screen */
 @media screen and (min-width: 1200px) {
-    .container {
+    .container, .searchResult {
         width: 60%;
     }
 }
