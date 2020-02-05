@@ -2,8 +2,11 @@ body {
     background-color: #d3dbe4;
 }
 
-label {
-    font-size: 1em;
+label, #stateLabel, #startDateLabel, #endDateLabel {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #c8d1db;
 }
 
 #errorMsg {
@@ -23,9 +26,10 @@ h1 {
 }
 
 .ui.container {
-    margin-top: 2em;
-    width: 35%;
+    color: #c8d1db;
     background-color: teal;
+    margin-top: 2em;
+    border-radius: 25px;
 }
 
 .form {
@@ -37,6 +41,11 @@ h1 {
 input {
     margin: 1em;
     padding: 1em;
+}
+
+#datePicker {
+    margin: 0;
+    padding: 0;
 }
 
 a {
@@ -53,36 +62,35 @@ a {
 /* adjust the width of the container according to the screen size */
 /* extra small screen */
 @media screen and (max-width: 575px) {
-    .container, .searchResult {
-        width: 90%;
+    .ui.container, .searchResult {
+        width: 95%;
     }
 }
 
 /*  small screen */
 @media screen and (min-width: 576px) {
-    .container, .searchResult {
-        width: 80%;
+    .ui.container, .searchResult {
+        width: 65%;
     }
 }
 
 /* medium screen */
 @media screen and (min-width: 768px) {
-    .container, .searchResult {
-        width: 70%;
+    .ui.container, .searchResult {
+        width: 60%;
     }
 }
 
 /* large screen */
 @media screen and (min-width: 992px) {
-    .container, .searchResult {
-        width: 75%;
+    .ui.container, .searchResult {
+        width:55%;
     }
 }
 
 /* extra large screen */
 @media screen and (min-width: 1200px) {
-    .container, .searchResult {
-        width: 60%;
+    .ui.container, .searchResult {
+        width: 45%;
     }
 }
-
