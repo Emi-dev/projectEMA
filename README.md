@@ -43,7 +43,8 @@ When the user click on the map button on each event, it opens a modal that displ
   - Venue map in the modal
 
 ### Product Vision
---- MVP Plus the following ---
+MVP Plus the following:
+
 Google Places API & Directions API:
 * An info window in the map modal with the venue information:
   - Address
