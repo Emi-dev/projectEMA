@@ -26,6 +26,7 @@ h1 {
     margin-top: 2em;
     width: 35%;
     background-color: teal;
+    border-radius: 25px;
 }
 
 .form {
