@@ -9,13 +9,13 @@ var endDate;
 // global variable diclarations for Google Map API
 var googleMapApiKey = "AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM";
 var venueMapInfo = [];
-var latitude = 0;
-var longitude = 0;
-
 var map;
 var marker;
 var latlng;
-var infowindow;
+var latitude = 0;
+var longitude = 0;
+
+// function to create a google map
 function initMap() {
     latlng = new google.maps.LatLng(latitude, longitude);
     infowindow = new google.maps.InfoWindow();
@@ -23,45 +23,41 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('mapContent'), {zoom: 17, center: latlng});
     // The marker, positioned at latlng
     marker = new google.maps.Marker({position: latlng, map: map});
-
-    // var request = {
-    //     query: document.getElementById("mapHeader").textContent,
-    //     fields: ['name', 'geometry'],
-    //   };
-    
-    //   var service = new google.maps.places.PlacesService(map);
-    
-    //   service.findPlaceFromQuery(request, function(results, status) {
-    //     if (status === google.maps.places.PlacesServiceStatus.OK) {
-    //       for (var i = 0; i < results.length; i++) {
-    //         createMarker(results[i]);
-    //       }
-    //       map.setCenter(results[0].geometry.location);
-    //     }
-    //   });
 }    
 
 $(document).ready(function() {
-    // date/time picker
-    $("#dateTime").calendar();
+    // datepicker
+    $('#rangestart').calendar({
+        type: 'date',
+        endCalendar: $('#rangeend')
+    });
+
+    $('#rangeend').calendar({
+        type: 'date',
+        startCalendar: $('#rangestart')
+    });
 
     // search button event handler
     $("#searchBtn").on("click", function(event) {
         // clear the display
         clearDisplay();
-        // get the musican's name entered in the input element and assign the value to the variable "musician"
+        // get the musican's name
         musician = $("#musicianInput").val();
 
-        // get the city anme entered in the input element and assign the value to the variable "city"
+        // get the city anme
         city = $("#cityInput").val();
         
-        // get the state code of the selected state and assign the value to the variable "state"
+        // get the state code
         state = $("select").val();
 
-        // get the start date (format: 2020-02-01T17:00:00Z)
-        //startDate = "2020-02-01T17:00:00Z";
-        // get the end date (format: 2020-02-29T22:00:00Z)
-        //endDate = "2020-02-29T22:00:00Z";
+        // get start date (format: 2020-02-01T17:00:00Z)
+        var startDateInput = $("#startDate").val();
+        startDate = moment(startDateInput, "MMMM DD, YYYY").format("YYYY-MM-DD") + "T00:00:00Z";
+
+        // get end date (format: 2020-02-01T17:00:00Z)
+        var endDateInput = $("#endDate").val();
+        endDate = moment(endDateInput, "MMMM DD, YYYY").format("YYYY-MM-DD") + "T00:00:00Z";
+
         // call the function "accessTicketmasterAPI"
         accessTicketmasterAPI();      
     });
@@ -90,9 +86,11 @@ $(document).ready(function() {
     // function to call Ticketmaster API and get the music event data
     function accessTicketmasterAPI() {
         // assign the API call url to the variable "ticketmasterURL"
-        ticketmasterURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=us&apikey=" + TicketmasterApiKey + "&keyword=" + musician + "&stateCode=" + state + "&city=" + city;
-        // ticketmasterURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=us&apikey=" + TicketmasterApiKey + "&keyword=" + musician + "&stateCode=" + state + "&city=" + city + "&startDateTime=" + startDate + "&endDateTime= " + endDate;
-        console.log(ticketmasterURL);
+        if($("#startDate").val()) {
+            ticketmasterURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=us&apikey=" + TicketmasterApiKey + "&keyword=" + musician + "&stateCode=" + state + "&city=" + city + "&startDateTime=" + startDate + "&endDateTime= " + endDate;
+        } else {
+            ticketmasterURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=us&apikey=" + TicketmasterApiKey + "&keyword=" + musician + "&stateCode=" + state + "&city=" + city;
+        }
 
         $.ajax({
             url: ticketmasterURL,
