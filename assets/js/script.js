@@ -78,6 +78,11 @@ $(document).ready(function() {
         initMap();
     });
 
+    // venue url link event listner
+    $(document).on("click", ".venueURL", function(event) {
+        event.stopPropagation();    // prevent event bubbling
+    });
+
     // event division event handler - open the ticket website in a new tab
     $(document).on("click", ".searchResult", function(event) {
         window.open($(this)[0].children[1].href, '_blank');
@@ -156,7 +161,7 @@ $(document).ready(function() {
 
                     // venue's url
                     if("outlets" in event) { // if outlet property (contains venue's URL) exists
-                        venueURL = $("<a>").attr({href: event.outlets[0].url, target: "_blank"}).text("Venue information");
+                        venueURL = $("<a>").addClass("venueURL").attr({href: event.outlets[0].url, target: "_blank"}).text("Venue information");
                         eventInfo.append(venueURL);
                     }
 
