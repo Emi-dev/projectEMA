@@ -24,11 +24,14 @@ h1 {
 
 .ui.container {
     margin-top: 2em;
+    width: 35%;
+    background-color: teal;
 }
 
 .form {
     margin: 2em;
     padding: 1.5em;
+    size: 45;
 }
 
 input {
@@ -82,3 +85,4 @@ a {
         width: 60%;
     }
 }
+
