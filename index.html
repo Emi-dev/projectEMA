@@ -5,7 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Semantic UI -->
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+        <!-- Semantic UI Calendar -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.css"/>
         <link rel="stylesheet" href="assets/css/style.css">
         <style>
             /* Set the size of the div element that contains the map */
@@ -22,39 +25,29 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!-- Semantic UI -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <!-- Semantic UI Calendar -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.js"></script>        
         <!-- Moment.ms -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
         <!-- my script file -->
         <script src="assets/js/script.js"></script>
         
         <div id="headerDiv" class="ui fixed inverted menu">
-            <h1>Music Event Search</h1>
+            <h1>EMA Music</h1>
         </div>
         <br>
         <br>
-        <br><br>
+        <br>
         <div class="ui container">
-            <div class="ui form">
-                <div class="ui checkbox">
-                    <input id="musicianCheckBox" type="checkbox" name="musician" />
-                    <label for="musicianCheckBox">Search by Musician</label>
-                </div>
-
-                <div class="ui checkbox">
-                    <input id="cityCheckBox" type="checkbox" name="city" />
-                    <label for="cityCheckBox">Search by City</label>
-                </div>
-                <br>
-                <br>
-                
-                <label for="musicianInput">Musician Name: </label>
+            <div class="ui form">                
+                <label for="musicianInput">Musician / Venue</label>
                 <input id="musicianInput" type="text">
                 <br>
                 <br>
                 
                 <div id="stateCity">
                     <div class="field">
-                        <label>State</label>
+                        <label id="stateLabel">State</label>
                         <select class="ui selection dropdown">
                             <option value="">State</option>
                             <option value="AL">Alabama</option>
@@ -115,13 +108,28 @@
                 </div>
                 <br>
 
-                <!-- date/time picker -->
-                <label>Date/Time</label>
-                <div id="dateTime" class="ui calendar">
-                  <div class="ui input left icon">
-                    <i class="calendar icon"></i>
-                    <input type="text" placeholder="Date/Time">
-                  </div>
+                <!-- datepicker -->
+                <div id="datePicker" class="ui form">
+                    <div class="two fields">
+                      <div class="field">
+                        <label id="startDateLabel">Start Date</label>
+                        <div class="ui calendar" id="rangestart">
+                          <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input id="startDate" type="text" placeholder="Start">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <label id="endDateLabel">End Date</label>
+                        <div class="ui calendar" id="rangeend">
+                          <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input id="endDate" type="text" placeholder="End">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                 </div>
                 <br/>
 
@@ -144,9 +152,6 @@
 
         <!-- Google Map API -->
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM&callback=initMap" type="text/javascript"></script>
-               
-        <!-- Googl Places API 
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5CY7yODBMjjWjHL6QD5QR2F4I3d_1NjM&libraries=places"></script> -->
     </div>
 </body>
 
