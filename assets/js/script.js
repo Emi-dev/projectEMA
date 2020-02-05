@@ -13,14 +13,16 @@ var latitude = 0;
 var longitude = 0;
 
 var map;
+var marker;
+var latlng;
 var infowindow;
 function initMap() {
-    var latlng = new google.maps.LatLng(latitude, longitude);
+    latlng = new google.maps.LatLng(latitude, longitude);
     infowindow = new google.maps.InfoWindow();
     // The map, centered at latlng
     map = new google.maps.Map(document.getElementById('mapContent'), {zoom: 17, center: latlng});
     // The marker, positioned at latlng
-    var marker = new google.maps.Marker({position: latlng, map: map});
+    marker = new google.maps.Marker({position: latlng, map: map});
 
     // var request = {
     //     query: document.getElementById("mapHeader").textContent,
@@ -41,7 +43,7 @@ function initMap() {
 
 $(document).ready(function() {
     // date/time picker
-    // $("#dateTime").calendar();
+    $("#dateTime").calendar();
 
     // search button event handler
     $("#searchBtn").on("click", function(event) {
@@ -77,10 +79,10 @@ $(document).ready(function() {
         // assign the latitude and longitude of the venue to the variables for the map
         latitude = parseFloat(venueMapInfo[dataEvent].lat);
         longitude = parseFloat(venueMapInfo[dataEvent].lon);
-        // create the map
         initMap();
     });
 
+    // event division event handler - open the ticket website in a new tab
     $(document).on("click", ".searchResult", function(event) {
         window.open($(this)[0].children[1].href, '_blank');
     });
@@ -111,7 +113,7 @@ $(document).ready(function() {
                     var isTimeTBA = event.dates.start.localTime === undefined;
                   
                     var momentDateTime;
-
+    
                     if(!isDateTBA) {
                         momentObj = moment(event.dates.start.localDate);
                     }
