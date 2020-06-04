@@ -1,5 +1,5 @@
 # EMA Music
-A weather dashboard using the OpenWeather API.
+A music event search app using the Tcketmaster API and Google Map Javascript API.
 
 ### Table of Contents
 * General Info
